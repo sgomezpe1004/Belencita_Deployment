@@ -34,7 +34,12 @@ mongoose.connect(URI, { serverSelectionTimeoutMS: 10000 })
   .then(() => console.log('✅ Conectado a MongoDB Atlas'))
   .catch(err => console.error('❌ Error de conexión a MongoDB:', err));
 
-// Ruta de prueba
+// Ruta de bienvenida (Root)
+app.get('/', (req, res) => {
+  res.send('💖 Beléncita Backend is CONNECTED and ready! ✨');
+});
+
+// Ruta de prueba (Health)
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor funcionando' });
 });
