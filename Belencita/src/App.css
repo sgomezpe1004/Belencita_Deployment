@@ -634,13 +634,13 @@
 .hero-card {
   padding: 28px 24px;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.55);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 200, 220, 0.35);
+  background: rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 200, 220, 0.25);
   box-shadow:
-    0 4px 24px rgba(200, 120, 170, 0.08),
-    0 1px 3px rgba(200, 120, 170, 0.06);
+    0 4px 24px rgba(200, 120, 170, 0.06),
+    0 1px 3px rgba(200, 120, 170, 0.04);
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
   cursor: default;
 }
@@ -768,23 +768,19 @@
   position: absolute;
   inset: 0;
   background:
-    repeating-linear-gradient(
-      90deg,
+    repeating-linear-gradient(90deg,
       rgba(255, 255, 255, 0.04) 0px,
       rgba(255, 255, 255, 0.04) 1px,
       transparent 1px,
-      transparent 18px
-    ),
-    linear-gradient(
-      180deg,
+      transparent 18px),
+    linear-gradient(180deg,
       #c2457a 0%,
       #a84d8e 20%,
       #8b3a82 45%,
       #9e4a90 55%,
       #b0558a 70%,
       #8b3a82 85%,
-      #6e2e6e 100%
-    );
+      #6e2e6e 100%);
 }
 
 .curtain-left .curtain-fabric {
@@ -809,14 +805,12 @@
   top: 0;
   bottom: 0;
   width: 40%;
-  background: linear-gradient(
-    90deg,
-    transparent 0%,
-    rgba(255, 255, 255, 0.06) 40%,
-    rgba(255, 255, 255, 0.1) 50%,
-    rgba(255, 255, 255, 0.06) 60%,
-    transparent 100%
-  );
+  background: linear-gradient(90deg,
+      transparent 0%,
+      rgba(255, 255, 255, 0.06) 40%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.06) 60%,
+      transparent 100%);
 }
 
 .curtain-left .curtain-fabric::before {
@@ -897,9 +891,12 @@
 }
 
 @keyframes curtain-cta-pulse {
-  0%, 100% {
+
+  0%,
+  100% {
     opacity: 1;
   }
+
   50% {
     opacity: 0.75;
   }
@@ -909,6 +906,7 @@
   0% {
     background-position: -200% center;
   }
+
   100% {
     background-position: 200% center;
   }

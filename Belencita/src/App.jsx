@@ -3,6 +3,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { SignedIn, SignedOut, SignIn } from '@clerk/clerk-react';
 import Navbar from './components/Navbar';
 import BelencitaAI from './components/BelencitaAI';
+import { OurHistory } from './OurHistory';
+import { Bloopers } from './Bloopers';
+import { Gallery } from './Gallery';
+import { Wishes } from './Wishes';
+import Playlist from './Playlist';
+import RouteTransition from './RouteTransition';
+import { MusicProvider } from './context/MusicContext';
+import GlobalMusicPlayer from './components/GlobalMusicPlayer';
+import GlobalBackground from './components/GlobalBackground';
+import FloatingMusicToggle from './components/FloatingMusicToggle';
 
 import './App.css';
 
@@ -11,13 +21,6 @@ function HomePage() {
 
   return (
     <>
-      {/* Full-page background butterflies */}
-      <div className="home-butterflies" aria-hidden="true">
-        {Array.from({ length: 50 }, (_, i) => (
-          <span key={i} className={`home-fly home-fly--${i + 1}`}>🦋</span>
-        ))}
-      </div>
-
       <div className="page-container">
         <div className="welcome-badge">✨ Feliz Cumpleaños Bestie ✨</div>
         <h1>
@@ -32,7 +35,7 @@ function HomePage() {
           <div className="hero-card">
             <span className="hero-card__emoji">💐</span>
             <h3>Nuestra Historia</h3>
-            <p>Revive los momentos que cambiaron todo en nuestras vidas</p>
+            <p>La historia de esta amistad tan bonita, la mejor amistad que he tenido en toda mi vida</p>
           </div>
           <div className="hero-card">
             <span className="hero-card__emoji">🥰</span>
@@ -42,7 +45,22 @@ function HomePage() {
           <div className="hero-card">
             <span className="hero-card__emoji">🎵</span>
             <h3>Playlist</h3>
-            <p>Lo que nos volvió a unir, y lo que te voy a agradecer por toda la vida</p>
+            <p>Lo que nos volvió a unir</p>
+          </div>
+          <div className="hero-card">
+            <span className="hero-card__emoji">📸</span>
+            <h3>Galería</h3>
+            <p>Tus fotos y vídeos donde te ves más bonita</p>
+          </div>
+          <div className="hero-card">
+            <span className="hero-card__emoji">⭐</span>
+            <h3>Deseos</h3>
+            <p>Mis deseos más bonitos para ti en este día tan especial</p>
+          </div>
+          <div className="hero-card">
+            <span className="hero-card__emoji">🤣</span>
+            <h3>Bloopers</h3>
+            <p>Mis bloopers haciendo el vídeo, para que te rías un rato</p>
           </div>
           <div className={`hero-card hero-card--video ${curtainOpen ? 'curtain-opened' : ''}`}>
             <div className="video-stage">
@@ -88,26 +106,12 @@ function HomePage() {
   );
 }
 
-function PlaceholderPage({ title, emoji, description }) {
-  return (
-    <div className="page-container">
-      <span className="page-emoji">{emoji}</span>
-      <h1>{title}</h1>
-      <p className="subtitle">{description}</p>
-    </div>
-  );
-}
-
 function App() {
   return (
     <BrowserRouter>
       <SignedOut>
         <div className="auth-page">
-          <div className="home-butterflies" aria-hidden="true">
-            {Array.from({ length: 30 }, (_, i) => (
-              <span key={i} className={`home-fly home-fly--${i + 1}`}>🦋</span>
-            ))}
-          </div>
+          <GlobalBackground />
           <div className="auth-container">
             <h1 className="auth-title">Beléncita 🩷</h1>
             <p className="auth-subtitle">Un rinconcito especial hecho con amor</p>
@@ -136,57 +140,42 @@ function App() {
       </SignedOut>
 
       <SignedIn>
-
-        <Navbar />
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route
-              path="/nosotras"
-              element={
-                <PlaceholderPage
-                  title="Nuestra historia"
-                  emoji="💕"
-                  description="Nuestra historia de amistad"
-                />
-              }
-            />
-            <Route
-              path="/galeria"
-              element={
-                <PlaceholderPage
-                  title="Galería"
-                  emoji="📸"
-                  description="Una obra de arte para ti"
-                />
-              }
-            />
-            <Route
-              path="/mensajes"
-              element={<BelencitaAI />}
-            />
-            <Route
-              path="/playlist"
-              element={
-                <PlaceholderPage
-                  title="Playlist"
-                  emoji="🎶"
-                  description="Lo que nos volvió a unir, y lo que te voy a agradecer por toda la vida"
-                />
-              }
-            />
-            <Route
-              path="/deseos"
-              element={
-                <PlaceholderPage
-                  title="Deseos"
-                  emoji="⭐"
-                  description="Mis deseos para ti"
-                />
-              }
-            />
-          </Routes>
-        </main>
+        <MusicProvider>
+          <GlobalBackground />
+          <RouteTransition />
+          <Navbar />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route
+                path="/our-history"
+                element={<OurHistory />}
+              />
+              <Route
+                path="/gallery"
+                element={<Gallery />}
+              />
+              <Route
+                path="/belencita-ai"
+                element={<BelencitaAI />}
+              />
+              <Route
+                path="/playlist"
+                element={<Playlist />}
+              />
+              <Route
+                path="/wishes"
+                element={<Wishes />}
+              />
+              <Route
+                path="/bloopers"
+                element={<Bloopers />}
+              />
+            </Routes>
+          </main>
+          <GlobalMusicPlayer />
+          <FloatingMusicToggle />
+        </MusicProvider>
       </SignedIn>
     </BrowserRouter>
   );

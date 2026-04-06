@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "server": "node server/index.js",
+    "server": "node backend/server/index.js",
+    "start": "node backend/server/index.js",
     "dev:all": "concurrently \"pnpm run dev\" \"pnpm run server\"",
     "build": "vite build",
     "lint": "eslint .",
@@ -17,6 +18,7 @@
     "cors": "^2.8.6",
     "dotenv": "^17.4.0",
     "express": "^5.2.1",
+    "framer-motion": "^12.38.0",
     "lucide-react": "^1.7.0",
     "mongodb": "^7.1.1",
     "mongoose": "^9.3.3",

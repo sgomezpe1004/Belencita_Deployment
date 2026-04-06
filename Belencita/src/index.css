@@ -55,17 +55,21 @@ body {
   font-size: 16px;
   line-height: 1.6;
   color: var(--text-secondary);
-  background: var(--bg-main);
+  
+  /* Gradiente suave rosita a blanco para TODA la aplicación */
+  background: linear-gradient(135deg, #fff0f5 0%, #ffd1e3 50%, #ffb6cc 100%);
+  background-attachment: fixed;
+  
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  /* Subtle background pattern */
+  /* Las decoraciones sutiles por encima del gradiente */
   background-image:
     radial-gradient(ellipse at 20% 50%, rgba(252, 207, 224, 0.3) 0%, transparent 50%),
     radial-gradient(ellipse at 80% 20%, rgba(197, 171, 250, 0.2) 0%, transparent 50%),
-    radial-gradient(ellipse at 50% 80%, rgba(255, 228, 237, 0.25) 0%, transparent 50%);
-  background-attachment: fixed;
+    radial-gradient(ellipse at 50% 80%, rgba(255, 228, 237, 0.25) 0%, transparent 50%),
+    linear-gradient(135deg, #fff0f5 0%, #ffd1e3 50%, #ffb6cc 100%);
 }
 
 #root {

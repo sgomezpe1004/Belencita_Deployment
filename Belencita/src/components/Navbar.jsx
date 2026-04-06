@@ -11,16 +11,18 @@ import {
   ChevronLeft,
   ChevronRight,
   Star,
+  Clapperboard,
 } from 'lucide-react';
 import './Navbar.css';
 
 const navItems = [
   { to: '/', icon: Home, label: 'Inicio' },
-  { to: '/nosotras', icon: Heart, label: 'Nuestra historia' },
-  { to: '/galeria', icon: ImageIcon, label: 'Galería' },
-  { to: '/mensajes', icon: MessageCircleHeart, label: 'Beléncita AI' },
+  { to: '/our-history', icon: Heart, label: 'Nuestra historia' },
+  { to: '/gallery', icon: ImageIcon, label: 'Galería' },
+  { to: '/belencita-ai', icon: MessageCircleHeart, label: 'Beléncita AI' },
   { to: '/playlist', icon: Music, label: 'Playlist' },
-  { to: '/deseos', icon: Star, label: 'Deseos' },
+  { to: '/wishes', icon: Star, label: 'Deseos' },
+  { to: '/bloopers', icon: Clapperboard, label: 'Bloopers' },
 ];
 
 export default function Navbar() {
@@ -66,7 +68,7 @@ export default function Navbar() {
         </div>
         {!collapsed && (
           <span className="sidebar__brand-text">
-            Belencita
+            Beléncita
           </span>
         )}
       </div>
@@ -109,7 +111,7 @@ export default function Navbar() {
 
         {!collapsed && (
           <p className="sidebar__footer-text">
-            Hecho con 🩷 para ti
+            Hecho con 🩷 para ti bestie
           </p>
         )}
 

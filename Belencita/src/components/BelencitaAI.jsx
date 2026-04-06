@@ -16,7 +16,32 @@ const avatarPhotos = [
 export default function BelencitaAI() {
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
-  const [message, setMessage] = useState('');
+  const [inputMessage, setInputMessage] = useState('');
+  const [messages, setMessages] = useState([
+    {
+      role: 'bot',
+      content: '¡Hola Bestie linda! 🩷 Soy Beléncita AI, y estoy aquí para recordarte lo maravillosa, hermosa y preciosa que eres. ¿Qué te gustaría saber?'
+    }
+  ]);
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Mantener los emojis estables generándolos una sola vez al cargar la página
+  const [bgEmojis] = useState(() => {
+    return Array.from({ length: 40 }).map((_, i) => {
+      const emojis = ['🌸', '🎀', '💖', '✨', '🌷', '💕', '🥰', '💅'];
+      const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+      return {
+        id: i,
+        emoji: randomEmoji,
+        style: {
+          '--x': `${Math.random() * 100}vw`,
+          '--duration': `${15 + Math.random() * 20}s`,
+          '--delay': `-${Math.random() * 20}s`,
+          '--scale': `${0.5 + Math.random() * 0.8}`
+        }
+      };
+    });
+  });
 
   // Rotate avatar photos every 4 seconds
   useEffect(() => {
@@ -30,8 +55,59 @@ export default function BelencitaAI() {
     return () => clearInterval(interval);
   }, []);
 
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim() || isLoading) return;
+
+    const userText = inputMessage.trim();
+    setInputMessage('');
+    
+    // Añadir mensaje del usuario
+    setMessages(prev => [...prev, { role: 'user', content: userText }]);
+    setIsLoading(true);
+
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+      const response = await fetch(`${apiUrl}/api/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: userText }),
+      });
+
+      const data = await response.json();
+      
+      if (data.response) {
+        setMessages(prev => [...prev, { role: 'bot', content: data.response }]);
+      } else {
+        throw new Error('Sin respuesta');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      setMessages(prev => [...prev, { 
+        role: 'bot', 
+        content: '¡Ay, bestie! 💖 Algo se desconectó un momento, pero recuerda que te quiero muchísimo. ¿Me lo vuelves a decir? ✨' 
+      }]);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   return (
     <div className="belencita-ai">
+      {/* Background feminine decorations */}
+      <div className="ai-bg-decorations" aria-hidden="true">
+        {bgEmojis.map((item) => (
+          <span
+            key={item.id}
+            className="ai-bg-emoji"
+            style={item.style}
+          >
+            {item.emoji}
+          </span>
+        ))}
+      </div>
+
       {/* Avatar Section — Centered at top */}
       <div className="ai-avatar-section">
         <div className="ai-avatar-ring">
@@ -57,7 +133,7 @@ export default function BelencitaAI() {
 
         <h1 className="ai-title">Beléncita AI</h1>
         <p className="ai-subtitle">
-          ✨ Tu asistente personal que sabe lo especial que eres ✨
+          ✨ Sé lo hermosa y preciosa que eres ✨
         </p>
 
         {/* Photo dots indicator */}
@@ -83,37 +159,38 @@ export default function BelencitaAI() {
       <div className="ai-chat">
         {/* Background butterflies */}
         <div className="ai-chat__butterflies" aria-hidden="true">
-          <span className="ai-chat__fly ai-chat__fly--1">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--2">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--3">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--4">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--5">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--6">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--7">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--8">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--9">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--10">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--11">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--12">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--13">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--14">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--15">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--16">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--17">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--18">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--19">🦋</span>
-          <span className="ai-chat__fly ai-chat__fly--20">🦋</span>
+          {Array.from({ length: 20 }).map((_, i) => (
+            <span key={i} className={`ai-chat__fly ai-chat__fly--${i + 1}`}>🦋</span>
+          ))}
         </div>
 
         <div className="ai-chat__messages">
-          <div className="ai-message ai-message--bot">
-            <div className="ai-message__avatar">
-              <img src={avatarPhotos[currentPhoto]} alt="" />
+          {messages.map((msg, idx) => (
+            <div key={idx} className={`ai-message ai-message--${msg.role}`}>
+              {msg.role === 'bot' && (
+                <div className="ai-message__avatar">
+                  <img src={avatarPhotos[currentPhoto]} alt="" />
+                </div>
+              )}
+              <div className="ai-message__bubble">
+                <p>{msg.content}</p>
+              </div>
             </div>
-            <div className="ai-message__bubble">
-              <p>¡Hola Bestie linda! 🩷 Soy Beléncita AI, y estoy aquí para recordarte lo increíble que eres. ¿Qué te gustaría saber?</p>
+          ))}
+          {isLoading && (
+            <div className="ai-message ai-message--bot">
+              <div className="ai-message__avatar">
+                <img src={avatarPhotos[currentPhoto]} alt="" />
+              </div>
+              <div className="ai-message__bubble ai-message__bubble--loading">
+                <div className="ai-typing-dots">
+                  <span></span>
+                  <span></span>
+                  <span></span>
+                </div>
+              </div>
             </div>
-          </div>
+          )}
         </div>
 
         <div className="ai-chat__input-area">
@@ -122,25 +199,24 @@ export default function BelencitaAI() {
               type="text"
               className="ai-chat__input"
               placeholder="Escríbele algo bonito a Belén..."
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
+              value={inputMessage}
+              onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === 'Enter' && message.trim()) {
-                  // Backend not connected yet
-                  setMessage('');
-                }
+                if (e.key === 'Enter') handleSendMessage();
               }}
+              disabled={isLoading}
             />
             <button
               className="ai-chat__send"
-              disabled={!message.trim()}
+              disabled={!inputMessage.trim() || isLoading}
+              onClick={handleSendMessage}
               aria-label="Enviar mensaje"
             >
               <Send size={18} strokeWidth={2} />
             </button>
           </div>
           <p className="ai-chat__hint">
-            El backend de Beléncita AI se conectará pronto 🚀
+            Beléncita AI está lista para escucharte 💖
           </p>
         </div>
       </div>

@@ -19,8 +19,9 @@ export default function UserSync() {
           // Tomar el email primario
           const email = user.primaryEmailAddress ? user.primaryEmailAddress.emailAddress : 'N/A';
           console.log('🔄 Intentando sincronizar usuario con el servidor...');
+          const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
 
-          const response = await fetch('http://localhost:3001/api/sync-user', {
+          const response = await fetch(`${apiUrl}/api/sync-user`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
