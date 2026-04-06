@@ -53,7 +53,10 @@ export async function getChatResponse(userMessage) {
 
         return completion.choices[0].message.content;
     } catch (error) {
-        console.error("❌ Error en Beléncita AI:", error);
-        return "¡Ay, bestie! 💖 Algo se desconectó un momento, pero recuerda que te quiero muchísimo. ¿Me lo vuelves a decir? ✨";
+        console.error("❌ ERROR CRÍTICO EN Beléncita AI (OpenAI):", error.message || error);
+        if (error.response) {
+            console.error("Detalles de respuesta OpenAI:", error.response.data);
+        }
+        throw error; // Re-lanzar para que index.js lo capture y envíe el mensaje amigable
     }
 }

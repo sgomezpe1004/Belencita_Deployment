@@ -24,7 +24,7 @@ if (!URI) {
 
 // Middleware
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: '*', // Permitir todos los orígenes para depuración en producción (CORS FIX)
   credentials: true
 }));
 app.use(express.json());
@@ -75,8 +75,11 @@ app.post('/api/chat', async (req, res) => {
     const response = await getChatResponse(message);
     res.json({ response });
   } catch (err) {
-    console.error('❌ Error en el chat:', err);
-    res.status(500).json({ error: 'Error al procesar el mensaje con la IA' });
+    console.error('❌ ERROR DETALLADO EN /api/chat:', err);
+    res.status(500).json({ 
+      error: 'Error al procesar el mensaje con la IA',
+      details: err.message 
+    });
   }
 });
 
