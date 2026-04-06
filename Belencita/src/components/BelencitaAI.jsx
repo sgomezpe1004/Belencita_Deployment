@@ -66,7 +66,6 @@ export default function BelencitaAI() {
     setIsLoading(true);
 
     try {
-      // Use Environment Variable or fallback to the Render production URL
       const apiUrl = import.meta.env.VITE_API_URL || 'https://belencita-deployment.onrender.com';
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',

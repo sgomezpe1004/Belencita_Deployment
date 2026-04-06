@@ -10,6 +10,7 @@ export default function SyncUser() {
 
         const syncUser = async () => {
             try {
+                // Llamada al backend para guardar/actualizar usuario
                 const apiUrl = import.meta.env.VITE_API_URL || 'https://belencita-deployment.onrender.com';
                 const res = await fetch(`${apiUrl}/api/sync-user`, {
                     method: "POST",
