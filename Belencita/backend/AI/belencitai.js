@@ -1,8 +1,9 @@
 import OpenAI from "openai";
 import dotenv from "dotenv";
 
-// Cargar variables de entorno desde el directorio raíz
-dotenv.config({ path: "../.env.local" });
+// No es necesario cargar dotenv aquí, ya se carga en el servidor principal (index.js)
+// Pero si se ejecuta solo, buscamos el .env por defecto
+dotenv.config(); 
 
 // Inicializar cliente de OpenAI (estándar)
 const openai = new OpenAI({
