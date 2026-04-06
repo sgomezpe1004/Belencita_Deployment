@@ -19,7 +19,7 @@ export default function UserSync() {
           // Tomar el email primario
           const email = user.primaryEmailAddress ? user.primaryEmailAddress.emailAddress : 'N/A';
           console.log('🔄 Intentando sincronizar usuario con el servidor...');
-          const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:3001';
+          const apiUrl = import.meta.env.VITE_API_URL || 'https://belencita-deployment.onrender.com';
 
           const response = await fetch(`${apiUrl}/api/sync-user`, {
             method: 'POST',
