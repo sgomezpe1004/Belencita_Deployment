@@ -5,8 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "server": "node backend/server/index.js",
-    "start": "node backend/server/index.js",
+    "server": "node server/index.js",
     "dev:all": "concurrently \"pnpm run dev\" \"pnpm run server\"",
     "build": "vite build",
     "lint": "eslint .",
