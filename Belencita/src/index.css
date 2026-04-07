@@ -2,14 +2,14 @@
 @import "tailwindcss";
 
 /* ═══════════════════════════════════════════
-   Global Styles — Feminine Birthday Theme
+   Global Styles — Feminine Birthday Theme (HARD RESET)
    ═══════════════════════════════════════════ */
 
 * {
   font-family: 'Outfit', sans-serif !important;
 }
 
-h1, h2, h3, h4, .ai-title, .welcome-badge {
+h1, h2, h3, h4, .highlight, .welcome-badge, .ai-title, .sidebar__brand-text {
   font-family: 'Playfair Display', serif !important;
 }
 
