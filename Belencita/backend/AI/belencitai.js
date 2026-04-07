@@ -35,18 +35,33 @@ Directrices:
 - Si ella se siente triste, anímala. Si está feliz, celebra con ella.
 `;
 
-export async function getChatResponse(userMessage) {
+export async function getChatResponse(userMessage, history = []) {
     try {
         if (!process.env.OPENAI_API_KEY) {
             throw new Error("OPENAI_API_KEY no encontrada en las variables de entorno");
         }
 
+        // Build messages array: system prompt + conversation history
+        const messages = [
+            { role: "system", content: SYSTEM_PROMPT }
+        ];
+
+        // Add conversation history (limit to last 20 messages for token management)
+        if (history.length > 0) {
+            const recentHistory = history.slice(-20);
+            for (const msg of recentHistory) {
+                if (msg.role === 'user' || msg.role === 'assistant') {
+                    messages.push({ role: msg.role, content: msg.content });
+                }
+            }
+        } else {
+            // Fallback: single message without history
+            messages.push({ role: "user", content: userMessage });
+        }
+
         const completion = await openai.chat.completions.create({
             model: "gpt-4o-mini", // El modelo más económico y potente de OpenAI
-            messages: [
-                { role: "system", content: SYSTEM_PROMPT },
-                { role: "user", content: userMessage }
-            ],
+            messages,
             temperature: 0.8,
         });
 

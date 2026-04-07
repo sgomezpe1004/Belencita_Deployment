@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
-import { Sparkles, Send } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { Sparkles, Send, Plus, Clock, Trash2, ArrowLeft, MessageCircle } from 'lucide-react';
+import { useChat } from '../context/ChatContext';
 import './BelencitaAI.css';
 
 const avatarPhotos = [
@@ -17,13 +18,20 @@ export default function BelencitaAI() {
   const [currentPhoto, setCurrentPhoto] = useState(0);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [inputMessage, setInputMessage] = useState('');
-  const [messages, setMessages] = useState([
-    {
-      role: 'bot',
-      content: '¡Hola Bestie linda! 🩷 Soy Beléncita AI, y estoy aquí para recordarte lo maravillosa, hermosa y preciosa que eres. ¿Qué te gustaría saber?'
-    }
-  ]);
   const [isLoading, setIsLoading] = useState(false);
+  const [showSessions, setShowSessions] = useState(false);
+  const messagesEndRef = useRef(null);
+
+  const {
+    sessions,
+    activeSession,
+    activeSessionId,
+    messages,
+    setMessages,
+    createNewSession,
+    switchSession,
+    deleteSession
+  } = useChat();
 
   // Mantener los emojis estables generándolos una sola vez al cargar la página
   const [bgEmojis] = useState(() => {
@@ -55,6 +63,11 @@ export default function BelencitaAI() {
     return () => clearInterval(interval);
   }, []);
 
+  // Auto scroll to bottom of messages
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [messages, isLoading]);
+
   const handleSendMessage = async () => {
     if (!inputMessage.trim() || isLoading) return;
 
@@ -66,13 +79,23 @@ export default function BelencitaAI() {
     setIsLoading(true);
 
     try {
+      // Build conversation history for context
+      const conversationHistory = [...messages, { role: 'user', content: userText }]
+        .map(m => ({
+          role: m.role === 'bot' ? 'assistant' : 'user',
+          content: m.content
+        }));
+
       const apiUrl = import.meta.env.VITE_API_URL || 'https://belencita-deployment.onrender.com';
       const response = await fetch(`${apiUrl}/api/chat`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({ message: userText }),
+        body: JSON.stringify({ 
+          message: userText,
+          history: conversationHistory
+        }),
       });
 
       const data = await response.json();
@@ -91,6 +114,16 @@ export default function BelencitaAI() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleNewChat = () => {
+    createNewSession();
+    setShowSessions(false);
+  };
+
+  const handleSelectSession = (sessionId) => {
+    switchSession(sessionId);
+    setShowSessions(false);
   };
 
   return (
@@ -155,6 +188,68 @@ export default function BelencitaAI() {
         </div>
       </div>
 
+      {/* Session Action Buttons */}
+      <div className="ai-session-actions">
+        <button className="ai-session-btn ai-session-btn--new" onClick={handleNewChat}>
+          <Plus size={16} strokeWidth={2.5} />
+          <span>Nuevo Chat</span>
+        </button>
+        <button 
+          className={`ai-session-btn ai-session-btn--history ${showSessions ? 'ai-session-btn--active' : ''}`} 
+          onClick={() => setShowSessions(!showSessions)}
+        >
+          <Clock size={16} strokeWidth={2.5} />
+          <span>Sesiones</span>
+          {sessions.length > 1 && (
+            <span className="ai-session-btn__badge">{sessions.length}</span>
+          )}
+        </button>
+      </div>
+
+      {/* Sessions Panel (Slide-in overlay) */}
+      <div className={`ai-sessions-panel ${showSessions ? 'ai-sessions-panel--open' : ''}`}>
+        <div className="ai-sessions-panel__header">
+          <button className="ai-sessions-panel__back" onClick={() => setShowSessions(false)}>
+            <ArrowLeft size={18} />
+          </button>
+          <h2>Tus Sesiones</h2>
+          <button className="ai-sessions-panel__new" onClick={handleNewChat}>
+            <Plus size={18} />
+          </button>
+        </div>
+        <div className="ai-sessions-panel__list">
+          {sessions.map(session => (
+            <div 
+              key={session.id}
+              className={`ai-session-item ${session.id === activeSessionId ? 'ai-session-item--active' : ''}`}
+              onClick={() => handleSelectSession(session.id)}
+            >
+              <div className="ai-session-item__icon">
+                <MessageCircle size={16} />
+              </div>
+              <div className="ai-session-item__info">
+                <span className="ai-session-item__title">{session.title}</span>
+                <span className="ai-session-item__meta">
+                  {session.messages.length - 1} mensajes · {session.updatedAt}
+                </span>
+              </div>
+              {sessions.length > 1 && (
+                <button 
+                  className="ai-session-item__delete"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    deleteSession(session.id);
+                  }}
+                  aria-label="Eliminar sesión"
+                >
+                  <Trash2 size={14} />
+                </button>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
       {/* Chat Section */}
       <div className="ai-chat">
         {/* Background butterflies */}
@@ -191,6 +286,7 @@ export default function BelencitaAI() {
               </div>
             </div>
           )}
+          <div ref={messagesEndRef} />
         </div>
 
         <div className="ai-chat__input-area">

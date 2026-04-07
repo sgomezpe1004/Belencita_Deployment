@@ -10,6 +10,7 @@ import { Wishes } from './Wishes';
 import Playlist from './Playlist';
 import RouteTransition from './RouteTransition';
 import { MusicProvider } from './context/MusicContext';
+import { ChatProvider } from './context/ChatContext';
 import GlobalMusicPlayer from './components/GlobalMusicPlayer';
 import GlobalBackground from './components/GlobalBackground';
 import FloatingMusicToggle from './components/FloatingMusicToggle';
@@ -141,6 +142,7 @@ function App() {
 
       <SignedIn>
         <MusicProvider>
+          <ChatProvider>
           <GlobalBackground />
           <RouteTransition />
           <Navbar />
@@ -175,6 +177,7 @@ function App() {
           </main>
           <GlobalMusicPlayer />
           <FloatingMusicToggle />
+          </ChatProvider>
         </MusicProvider>
       </SignedIn>
     </BrowserRouter>

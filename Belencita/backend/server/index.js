@@ -61,11 +61,11 @@ app.post('/api/sync-user', async (req, res) => {
 // Endpoint para Belencita AI
 app.post('/api/chat', async (req, res) => {
   try {
-    const { message } = req.body;
+    const { message, history } = req.body;
     if (!message) return res.status(400).json({ error: 'Faltan datos' });
 
     console.log(`💬 Mensaje para Beléncita AI: ${message}`);
-    const response = await getChatResponse(message);
+    const response = await getChatResponse(message, history || []);
     res.json({ response });
   } catch (err) {
     console.error('❌ Error en el chat:', err);
