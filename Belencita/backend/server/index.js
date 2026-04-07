@@ -18,7 +18,7 @@ if (!URI) {
 
 // Middleware
 app.use(cors({
-  origin: 'http://localhost:5173',
+  origin: '*',
   credentials: true
 }));
 app.use(express.json());
@@ -28,7 +28,11 @@ mongoose.connect(URI, { serverSelectionTimeoutMS: 10000 })
   .then(() => console.log('✅ Conectado a MongoDB Atlas'))
   .catch(err => console.error('❌ Error de conexión a MongoDB:', err));
 
-// Ruta de prueba
+// Rutas base
+app.get('/', (req, res) => {
+  res.send('💖 Servidor de Beléncita listo y funcionando 🌸');
+});
+
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor funcionando' });
 });

@@ -52,7 +52,12 @@ export async function getChatResponse(userMessage) {
 
         return completion.choices[0].message.content;
     } catch (error) {
-        console.error("❌ Error en Beléncita AI:", error);
+        console.error("❌ Error CRÍTICO en Beléncita AI:", {
+            message: error.message,
+            status: error.status,
+            type: error.type,
+            stack: error.stack
+        });
         return "¡Ay, bestie! 💖 Algo se desconectó un momento, pero recuerda que te quiero muchísimo. ¿Me lo vuelves a decir? ✨";
     }
 }
