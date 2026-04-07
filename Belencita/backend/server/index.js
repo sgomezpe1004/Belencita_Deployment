@@ -37,6 +37,8 @@ app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor funcionando' });
 });
 
+import Session from './models/Sessions.js';
+
 // Endpoint para sincronizar usuarios
 app.post('/api/sync-user', async (req, res) => {
   try {
@@ -54,6 +56,44 @@ app.post('/api/sync-user', async (req, res) => {
     res.status(200).json({ success: true, user });
   } catch (err) {
     console.error('❌ Error sincronizando usuario:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Endpoints para sesiones
+app.get('/api/sessions/:userId', async (req, res) => {
+  try {
+    const sessions = await Session.find({ userId: req.params.userId }).sort({ updatedAt: -1 });
+    res.json(sessions);
+  } catch (err) {
+    console.error('❌ Error getting sessions:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post('/api/sessions', async (req, res) => {
+  try {
+    const { userId, sessionId, sessionName, messages, time } = req.body;
+    if (!userId || !sessionId) return res.status(400).json({ error: 'Faltan datos' });
+
+    const session = await Session.findOneAndUpdate(
+      { sessionId },
+      { userId, sessionName: sessionName || 'Chat nuevo ✨', messages: messages || [], time: time || new Date().toLocaleTimeString(), date: new Date() },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+    res.json({ success: true, session });
+  } catch (err) {
+    console.error('❌ Error saving session:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.delete('/api/sessions/:sessionId', async (req, res) => {
+  try {
+    await Session.findOneAndDelete({ sessionId: req.params.sessionId });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('❌ Error deleting session:', err);
     res.status(500).json({ error: 'Error interno del servidor' });
   }
 });
