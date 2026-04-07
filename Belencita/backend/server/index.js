@@ -2,17 +2,11 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import mongoose from 'mongoose';
-import path from 'path';
-import { fileURLToPath } from 'url';
 import User from './models/User.js';
 import { getChatResponse } from '../AI/belencitai.js';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
-
 // Cargar variables de entorno
-dotenv.config(); // Carga .env si existe en el directorio de ejecución
-dotenv.config({ path: path.join(__dirname, '../../.env.local') }); // Para desarrollo local
+dotenv.config({ path: '../../.env.local' });
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -24,7 +18,7 @@ if (!URI) {
 
 // Middleware
 app.use(cors({
-  origin: '*', // Permitir todos los orígenes para depuración en producción (CORS FIX)
+  origin: 'http://localhost:5173',
   credentials: true
 }));
 app.use(express.json());
@@ -34,12 +28,7 @@ mongoose.connect(URI, { serverSelectionTimeoutMS: 10000 })
   .then(() => console.log('✅ Conectado a MongoDB Atlas'))
   .catch(err => console.error('❌ Error de conexión a MongoDB:', err));
 
-// Ruta de bienvenida (Root)
-app.get('/', (req, res) => {
-  res.send('💖 Beléncita Backend is CONNECTED and ready! ✨');
-});
-
-// Ruta de prueba (Health)
+// Ruta de prueba
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', message: 'Servidor funcionando' });
 });
@@ -75,11 +64,8 @@ app.post('/api/chat', async (req, res) => {
     const response = await getChatResponse(message);
     res.json({ response });
   } catch (err) {
-    console.error('❌ ERROR DETALLADO EN /api/chat:', err);
-    res.status(500).json({ 
-      error: 'Error al procesar el mensaje con la IA',
-      details: err.message 
-    });
+    console.error('❌ Error en el chat:', err);
+    res.status(500).json({ error: 'Error al procesar el mensaje con la IA' });
   }
 });
 

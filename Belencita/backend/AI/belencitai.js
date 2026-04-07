@@ -1,9 +1,8 @@
 import OpenAI from "openai";
 import dotenv from "dotenv";
 
-// No es necesario cargar dotenv aquí, ya se carga en el servidor principal (index.js)
-// Pero si se ejecuta solo, buscamos el .env por defecto
-dotenv.config(); 
+// Cargar variables de entorno desde el directorio raíz
+dotenv.config({ path: "../.env.local" });
 
 // Inicializar cliente de OpenAI (estándar)
 const openai = new OpenAI({
@@ -53,10 +52,7 @@ export async function getChatResponse(userMessage) {
 
         return completion.choices[0].message.content;
     } catch (error) {
-        console.error("❌ ERROR CRÍTICO EN Beléncita AI (OpenAI):", error.message || error);
-        if (error.response) {
-            console.error("Detalles de respuesta OpenAI:", error.response.data);
-        }
-        throw error; // Re-lanzar para que index.js lo capture y envíe el mensaje amigable
+        console.error("❌ Error en Beléncita AI:", error);
+        return "¡Ay, bestie! 💖 Algo se desconectó un momento, pero recuerda que te quiero muchísimo. ¿Me lo vuelves a decir? ✨";
     }
 }
