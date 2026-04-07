@@ -668,7 +668,7 @@
 .ai-sessions-panel {
   position: fixed;
   top: 0;
-  left: 0;
+  right: 0;
   width: 100%;
   max-width: 380px;
   height: 100vh;
@@ -676,12 +676,12 @@
   background: rgba(255, 248, 252, 0.92);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
-  border-right: 1px solid rgba(232, 180, 210, 0.25);
-  box-shadow: 8px 0 40px rgba(200, 120, 170, 0.12);
+  border-left: 1px solid rgba(232, 180, 210, 0.25);
+  box-shadow: -8px 0 40px rgba(200, 120, 170, 0.12);
   z-index: 1000;
   display: flex;
   flex-direction: column;
-  transform: translateX(-105%);
+  transform: translateX(105%);
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
