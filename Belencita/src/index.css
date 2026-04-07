@@ -9,8 +9,14 @@
   font-family: 'Outfit', sans-serif !important;
 }
 
-h1, h2, h3, h4, .highlight, .welcome-badge, .ai-title, .sidebar__brand-text {
+h1, h2, h3, h4, .highlight, .ai-title, .sidebar__brand-text, .rt-hb-title, .hb-highlight {
   font-family: 'Playfair Display', serif !important;
+}
+
+.welcome-badge {
+  font-family: 'Outfit', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px;
 }
 
 *,
