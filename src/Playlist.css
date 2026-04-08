@@ -1,0 +1,320 @@
+.playlist-page.page-container {
+  padding: 40px 60px 100px;
+  width: 100% !important;
+  max-width: 100% !important;
+  margin: 0 auto !important;
+  margin-bottom: 220px !important;
+}
+
+.playlist-header-modern {
+  padding: 100px 48px 64px;
+  background: linear-gradient(to bottom, rgba(232, 121, 168, 0.3), rgba(0, 0, 0, 0));
+  display: flex;
+  align-items: flex-end;
+  width: 100%;
+}
+
+.playlist-header-content {
+  display: flex;
+  align-items: flex-end;
+  gap: 32px;
+}
+
+.playlist-cover-art {
+  width: 250px;
+  height: 250px;
+  box-shadow: 0 12px 48px rgba(232, 121, 168, 0.3);
+  border-radius: 16px;
+  overflow: hidden;
+}
+
+.playlist-cover-art img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playlist-text h4 {
+  font-size: 0.85rem;
+  font-weight: 800;
+  margin-bottom: 12px;
+  color: #4a2040;
+  opacity: 0.6;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+}
+
+.playlist-text h1 {
+  font-size: 4.5rem;
+  font-weight: 700;
+  color: #4a2040;
+  letter-spacing: -2px;
+  line-height: 1;
+  font-family: 'Playfair Display', serif;
+  margin: 0;
+  filter: drop-shadow(0 2px 10px rgba(232, 121, 168, 0.1));
+}
+
+.playlist-text p {
+  color: #8c6585;
+  font-size: 1rem;
+  margin-top: 24px;
+}
+
+.playlist-controls-bar {
+  padding: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.main-play-actions {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.play-all-btn {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: #e879a8;
+  border: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: 0 12px 32px rgba(232, 121, 168, 0.4);
+  color: white;
+}
+
+.open-mini-player-btn {
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(232, 121, 168, 0.2);
+  color: #4a2040;
+  padding: 14px 28px;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-weight: 700;
+  font-size: 1rem;
+  cursor: pointer;
+  backdrop-filter: blur(20px);
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  box-shadow: 0 8px 32px rgba(232, 121, 168, 0.1);
+}
+
+.open-mini-player-btn:hover {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(232, 121, 168, 0.4);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(232, 121, 168, 0.15);
+}
+
+/* Filters & Search */
+.playlist-filters {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+  flex: 2;
+  justify-content: space-between;
+}
+
+.search-wrapper {
+  position: relative;
+  min-width: 250px;
+  flex: 1;
+}
+
+.search-icon {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #8c6585;
+  opacity: 0.5;
+}
+
+.search-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.4);
+  border: 1px solid rgba(232, 121, 168, 0.2);
+  padding: 14px 16px 14px 48px;
+  border-radius: 24px;
+  color: #4a2040;
+  font-size: 0.95rem;
+  outline: none;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+}
+
+.search-input:focus {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(232, 121, 168, 0.5);
+  box-shadow: 0 0 24px rgba(232, 121, 168, 0.1);
+}
+
+.artist-pills {
+  display: flex;
+  gap: 12px;
+  flex-shrink: 0;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.artist-pill {
+  padding: 10px 20px;
+  border-radius: 24px;
+  background: rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(232, 121, 168, 0.15);
+  color: #8c6585;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+  backdrop-filter: blur(20px);
+}
+
+.artist-pill:hover {
+  background: rgba(255, 255, 255, 0.5);
+  color: #4a2040;
+}
+
+.artist-pill.active {
+  background: #e879a8;
+  color: #fff;
+  border-color: #e879a8;
+  box-shadow: 0 8px 20px rgba(232, 121, 168, 0.25);
+}
+
+/* iOS 26 Light Glass Container */
+.glass-widget-container.ultra-blur {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(30px) saturate(160%);
+  -webkit-backdrop-filter: blur(30px) saturate(160%);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 48px;
+  padding: 48px 48px 100px;
+  box-shadow: 0 40px 100px rgba(0, 0, 0, 0.1);
+  margin-top: 24px;
+  width: 100%;
+  min-height: 60vh;
+}
+
+.song-list-header {
+  display: grid;
+  grid-template-columns: 56px 2.5fr 1.5fr 100px;
+  padding: 0 24px 16px;
+  border-bottom: 1px solid rgba(232, 121, 168, 0.1);
+  color: #b888a8;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  align-items: center;
+}
+
+.col-artist-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.song-row {
+  display: grid;
+  grid-template-columns: 56px 2.5fr 1.5fr 100px;
+  padding: 16px 24px;
+  border-radius: 20px;
+  transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+  cursor: pointer;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.song-row:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: translateX(8px) scale(1.01);
+}
+
+.song-row.active {
+  background: rgba(232, 121, 168, 0.1);
+  border: 1px solid rgba(232, 121, 168, 0.2);
+}
+
+.small-cover {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(232, 121, 168, 0.2);
+}
+
+.row-title {
+  color: #4a2040;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.3px;
+}
+
+.row-artist {
+  color: #8c6585;
+  font-size: 0.95rem;
+}
+
+.col-artist {
+  color: #8c6585;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.col-time {
+  color: #8c6585;
+  font-size: 0.9rem;
+  font-family: 'Inter', sans-serif;
+  opacity: 0.7;
+}
+
+.highlight-text {
+  color: #e879a8;
+}
+
+.no-results {
+  text-align: center;
+  padding: 60px;
+  color: #b888a8;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+
+@media (max-width: 900px) {
+  .playlist-text h1 {
+    font-size: 3.5rem;
+  }
+
+  .glass-widget-container.ultra-blur {
+    padding: 24px;
+    border-radius: 40px;
+  }
+}
+
+@media (max-width: 600px) {
+  .playlist-header-modern {
+    padding: 60px 20px 24px;
+  }
+
+  .playlist-text h1 {
+    font-size: 2.8rem;
+  }
+
+  .playlist-cover-art {
+    width: 200px;
+    height: 200px;
+  }
+
+  .song-row {
+    padding: 12px 16px;
+  }
+}
