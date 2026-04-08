@@ -1,0 +1,117 @@
+import express from 'express';
+import cors from 'cors';
+import dotenv from 'dotenv';
+import mongoose from 'mongoose';
+import User from './models/User.js';
+import { getChatResponse } from '../AI/belencitai.js';
+
+// Cargar variables de entorno
+dotenv.config({ path: '../../.env.local' });
+
+const app = express();
+const PORT = process.env.PORT || 3001;
+const URI = process.env.MONGODB_URI;
+
+if (!URI) {
+  throw new Error('❌ MONGODB_URI no definido en .env.local');
+}
+
+// Middleware
+app.use(cors({
+  origin: '*',
+  credentials: true
+}));
+app.use(express.json());
+
+// Conexión a MongoDB (sin opciones obsoletas)
+mongoose.connect(URI, { serverSelectionTimeoutMS: 10000 })
+  .then(() => console.log('✅ Conectado a MongoDB Atlas'))
+  .catch(err => console.error('❌ Error de conexión a MongoDB:', err));
+
+// Rutas base
+app.get('/', (req, res) => {
+  res.send('💖 Servidor de Beléncita listo y funcionando 🌸');
+});
+
+app.get('/api/health', (req, res) => {
+  res.json({ status: 'ok', message: 'Servidor funcionando' });
+});
+
+import Session from './models/Sessions.js';
+
+// Endpoint para sincronizar usuarios
+app.post('/api/sync-user', async (req, res) => {
+  try {
+    const { clerkId, email, firstName, lastName, imageUrl } = req.body;
+
+    if (!clerkId || !email) return res.status(400).json({ error: 'Faltan datos obligatorios' });
+
+    const user = await User.findOneAndUpdate(
+      { clerkId },
+      { email, firstName, lastName, imageUrl, lastSignIn: new Date() },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+
+    console.log(`👤 Usuario sincronizado: ${email}`);
+    res.status(200).json({ success: true, user });
+  } catch (err) {
+    console.error('❌ Error sincronizando usuario:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Endpoints para sesiones
+app.get('/api/sessions/:userId', async (req, res) => {
+  try {
+    const sessions = await Session.find({ userId: req.params.userId }).sort({ updatedAt: -1 });
+    res.json(sessions);
+  } catch (err) {
+    console.error('❌ Error getting sessions:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.post('/api/sessions', async (req, res) => {
+  try {
+    const { userId, sessionId, sessionName, messages, time } = req.body;
+    if (!userId || !sessionId) return res.status(400).json({ error: 'Faltan datos' });
+
+    const session = await Session.findOneAndUpdate(
+      { sessionId },
+      { userId, sessionName: sessionName || 'Chat nuevo ✨', messages: messages || [], time: time || new Date().toLocaleTimeString(), date: new Date() },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+    res.json({ success: true, session });
+  } catch (err) {
+    console.error('❌ Error saving session:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+app.delete('/api/sessions/:sessionId', async (req, res) => {
+  try {
+    await Session.findOneAndDelete({ sessionId: req.params.sessionId });
+    res.json({ success: true });
+  } catch (err) {
+    console.error('❌ Error deleting session:', err);
+    res.status(500).json({ error: 'Error interno del servidor' });
+  }
+});
+
+// Endpoint para Belencita AI
+app.post('/api/chat', async (req, res) => {
+  try {
+    const { message, history } = req.body;
+    if (!message) return res.status(400).json({ error: 'Faltan datos' });
+
+    console.log(`💬 Mensaje para Beléncita AI: ${message}`);
+    const response = await getChatResponse(message, history || []);
+    res.json({ response });
+  } catch (err) {
+    console.error('❌ Error en el chat:', err);
+    res.status(500).json({ error: 'Error al procesar el mensaje con la IA' });
+  }
+});
+
+// Iniciar servidor
+app.listen(PORT, () => console.log(`🚀 Servidor corriendo en http://localhost:${PORT}`));

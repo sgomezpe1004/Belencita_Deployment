@@ -1,0 +1,147 @@
+/* src/Wishes.css */
+
+.wishes-page {
+  position: relative;
+  min-height: calc(100vh - 100px);
+  padding: 40px 20px;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  border-radius: 20px;
+  /* Fondo rosita transparente glassmorphism */
+  background: rgba(255, 192, 215, 0.15);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+
+.wishes-background {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.wish-float-item {
+  position: absolute;
+  bottom: -60px;
+  font-size: 24px;
+  opacity: 0.6;
+  filter: drop-shadow(0 2px 4px rgba(255, 100, 150, 0.3));
+  /* La animación maneja su posición vertical */
+  animation-name: float-up-wish;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+}
+
+@keyframes float-up-wish {
+  0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.8; }
+  80% { opacity: 0.8; }
+  100% { transform: translateY(-120vh) rotate(360deg); opacity: 0; }
+}
+
+.wishes-content {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  max-width: 1100px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.wishes-title {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 5rem;
+  margin-bottom: 50px;
+  text-align: center;
+  
+  background: linear-gradient(90deg, #ff8da1, #e6b2c6, #ffb86c, #bd93f9, #ff578b);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: wish-title-pop 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards, gradient-pan-wishes 3s linear infinite;
+  
+  filter: drop-shadow(0 2px 5px rgba(255, 87, 139, 0.3));
+}
+
+@keyframes wish-title-pop {
+  0% { transform: scale(0.8) translateY(-20px); opacity: 0; }
+  100% { transform: scale(1) translateY(0); opacity: 1; }
+}
+
+@keyframes gradient-pan-wishes {
+  0% { background-position: 0% center; }
+  50% { background-position: 100% center; }
+  100% { background-position: 0% center; }
+}
+
+.wishes-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  width: 100%;
+}
+
+.wish-card {
+  background: rgba(255, 255, 255, 0.65);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 2px solid rgba(255, 255, 255, 0.8);
+  border-radius: 28px;
+  padding: 35px 25px;
+  width: calc(33.333% - 20px);
+  min-width: 280px;
+  text-align: center;
+  box-shadow: 0 10px 40px rgba(240, 150, 180, 0.15), inset 0 0 0 1px rgba(255,255,255,0.4);
+  transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.4s ease, background 0.4s ease;
+  
+  /* Fade in init */
+  opacity: 0;
+  animation: wish-fade-in 0.8s ease-out forwards;
+}
+
+.wish-card:hover {
+  transform: translateY(-15px) scale(1.03);
+  box-shadow: 0 25px 50px rgba(255, 100, 150, 0.25);
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.wish-icon {
+  font-size: 55px;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 8px 10px rgba(0,0,0,0.1));
+  transition: transform 0.3s ease;
+}
+
+.wish-card:hover .wish-icon {
+  transform: scale(1.15) rotate(5deg);
+}
+
+.wish-text {
+  font-family: 'Playfair Display', Georgia, serif;
+  font-size: 1.25rem;
+  color: #923a5e;
+  line-height: 1.5;
+  font-weight: 600;
+  margin: 0;
+}
+
+@keyframes wish-fade-in {
+  from { opacity: 0; transform: translateY(50px) scale(0.9); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+@media (max-width: 950px) {
+  .wish-card { width: calc(50% - 15px); }
+  .wishes-title { font-size: 4rem; margin-bottom: 30px; }
+}
+
+@media (max-width: 650px) {
+  .wish-card { width: 100%; max-width: 400px; margin: 0 auto; }
+}

@@ -1,0 +1,729 @@
+/* ═══════════════════════════════════════════
+   GLOBAL TRANSITIONS OVERLAY
+   ═══════════════════════════════════════════ */
+
+.rt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 999999;
+  /* Over everything */
+  pointer-events: none;
+  /* Let clicks pass if needed, though they are short */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  transition: opacity 0.8s ease;
+}
+
+/* Forzamos una salida suave */
+.rt-exit-active {
+  animation: rt-fade-out 0.8s ease-in-out forwards !important;
+}
+
+@keyframes rt-fade-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(1.05);
+    filter: blur(10px);
+  }
+}
+
+/* ───────────────────────────────────────────
+   🏠 INICIO: Feliz Cumpleaños Bonito
+   ─────────────────────────────────────────── */
+
+.rt-home-stage {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255, 230, 240, 0.95), rgba(255, 190, 220, 0.98));
+  backdrop-filter: blur(20px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-stage-in 0.8s ease-out forwards;
+}
+
+.rt-happy-bday-card {
+  position: relative;
+  z-index: 20;
+  text-align: center;
+  padding: 50px 40px;
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  box-shadow: 0 20px 50px rgba(220, 100, 150, 0.25), inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+  animation: bday-card-in 1s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes fade-stage-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes bday-card-in {
+  0% {
+    transform: scale(0.6) translateY(50px);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(1) translateY(0);
+    opacity: 1;
+  }
+}
+
+.rt-hb-title {
+  font-family: "Playfair Display", Georgia, "Times New Roman", serif;
+  font-size: 80px;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.rt-hb-word {
+  background: linear-gradient(90deg, #ff8da1, #e6b2c6, #ffb86c, #bd93f9, #ff578b);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradient-pan 3s linear infinite;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.hb-highlight {
+  font-size: 100px;
+  font-weight: bold;
+}
+
+@keyframes gradient-pan {
+  0% {
+    background-position: 0% center;
+  }
+
+  50% {
+    background-position: 100% center;
+  }
+
+  100% {
+    background-position: 0% center;
+  }
+}
+
+.rt-hb-subtitle {
+  font-size: 20px;
+  font-weight: 800;
+  color: #a84271;
+  margin-top: 25px;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+}
+
+.rt-confetti-container {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.rt-confetti-piece {
+  position: absolute;
+  width: 12px;
+  height: 24px;
+  background: var(--bg);
+  opacity: 0;
+  border-radius: 2px;
+  animation: confetti-explode 1.8s cubic-bezier(0.25, 1, 0.5, 1) var(--delay) forwards;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.rt-confetti-piece:nth-child(even) {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+}
+
+.rt-unlock-btn {
+  margin-top: 30px;
+  background: linear-gradient(135deg, #ff8da1, #e8467a);
+  border: none;
+  padding: 16px 48px;
+  border-radius: 100px;
+  color: white;
+  font-family: 'Outfit', sans-serif;
+  font-size: 22px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 10px 25px rgba(232, 121, 168, 0.4);
+  transition: all 0.3s ease;
+  animation: pulse-unlock 2s infinite;
+  z-index: 30;
+  pointer-events: auto;
+}
+
+.rt-unlock-btn:hover {
+  transform: scale(1.1) translateY(-3px);
+  box-shadow: 0 15px 35px rgba(232, 121, 168, 0.6);
+  filter: brightness(1.1);
+}
+
+@keyframes pulse-unlock {
+
+  0%,
+  100% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+.rt-hb-subtitle {
+  font-size: 24px;
+  color: #c0456a;
+  margin-top: 25px;
+  font-family: 'Outfit', sans-serif;
+  font-style: italic;
+  opacity: 0;
+  animation: fade-in-up 1s ease-out 0.8s forwards;
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes confetti-explode {
+  0% {
+    transform: translate(0, 0) scale(0) rotate(0deg);
+    opacity: 0;
+  }
+
+  10% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(var(--rand-x), var(--rand-y)) scale(1.2) rotate(var(--rand-r));
+    opacity: 0;
+  }
+}
+
+/* ───────────────────────────────────────────
+   📖 HISTORIA: Corazón Latiendo
+   ─────────────────────────────────────────── */
+
+.rt-history-stage {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 5, 10, 0.5);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-stage 2s ease-in-out forwards;
+}
+
+.rt-heart {
+  font-size: 140px;
+  position: relative;
+  z-index: 10;
+  filter: drop-shadow(0 0 20px rgba(255, 50, 100, 0.8));
+  animation: heart-beat 0.6s ease-in-out infinite alternate;
+}
+
+.rt-heart-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255, 50, 100, 0.6) 0%, transparent 70%);
+  animation: heart-glow-pulse 1.2s ease-in-out infinite;
+}
+
+@keyframes heart-beat {
+  0% {
+    transform: scale(1);
+  }
+
+  100% {
+    transform: scale(1.3);
+  }
+}
+
+@keyframes heart-glow-pulse {
+  0% {
+    transform: scale(0.8);
+    opacity: 0.5;
+  }
+
+  50% {
+    transform: scale(1.8);
+    opacity: 0;
+  }
+
+  100% {
+    transform: scale(0.8);
+    opacity: 0;
+  }
+}
+
+/* ───────────────────────────────────────────
+   🤖 BELENCITA AI: Avatar Multicara
+   ─────────────────────────────────────────── */
+
+.rt-ai-stage {
+  position: absolute;
+  inset: 0;
+  background: rgba(20, 10, 30, 0.7);
+  backdrop-filter: blur(20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  animation: fade-stage 2s ease-in-out forwards;
+}
+
+.rt-ai-avatar-container {
+  position: relative;
+  width: 220px;
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 24px;
+}
+
+.rt-ai-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 4px dashed rgba(255, 150, 200, 0.8);
+  animation: ai-spin 3s linear infinite;
+}
+
+.rt-ai-avatar {
+  width: 180px;
+  height: 180px;
+  border-radius: 50%;
+  border: 4px solid #fff;
+  background-size: cover;
+  background-position: center;
+  box-shadow: 0 0 40px rgba(255, 100, 150, 0.4);
+  /* The magic face changing! */
+  animation: ai-face-flip 1.8s steps(1) infinite;
+}
+
+.rt-ai-scan {
+  font-size: 24px;
+  color: #fff;
+  font-family: monospace;
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  background: linear-gradient(90deg, #ff8da1, #e6b2c6, #ff8da1);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: ai-text-glow 1.5s linear infinite;
+}
+
+@keyframes ai-spin {
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes ai-face-flip {
+  0% {
+    background-image: url('/belen1.jpeg');
+  }
+
+  25% {
+    background-image: url('/belen3.jpeg');
+  }
+
+  50% {
+    background-image: url('/belen6.jpeg');
+  }
+
+  75% {
+    background-image: url('/belen9.jpeg');
+  }
+
+  100% {
+    background-image: url('/belen1.jpeg');
+  }
+}
+
+@keyframes ai-text-glow {
+  0% {
+    background-position: 0% center;
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 1;
+  }
+
+  100% {
+    background-position: 200% center;
+    opacity: 0.5;
+  }
+}
+
+/* ───────────────────────────────────────────
+   📸 GALERÍA: Flash & Shutter
+   ─────────────────────────────────────────── */
+
+.rt-lens-top,
+.rt-lens-bottom {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50vh;
+  background: #111;
+  z-index: 10;
+}
+
+.rt-lens-top {
+  top: 0;
+  transform: translateY(-100%);
+  animation: shutter-top 1.6s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+}
+
+.rt-lens-bottom {
+  bottom: 0;
+  transform: translateY(100%);
+  animation: shutter-bottom 1.6s cubic-bezier(0.8, 0, 0.2, 1) forwards;
+}
+
+@keyframes shutter-top {
+  0% {
+    transform: translateY(-100%);
+  }
+
+  30% {
+    transform: translateY(0%);
+  }
+
+  /* cierran */
+  45% {
+    transform: translateY(0%);
+  }
+
+  /* pausa foto */
+  100% {
+    transform: translateY(-100%);
+  }
+
+  /* abren */
+}
+
+@keyframes shutter-bottom {
+  0% {
+    transform: translateY(100%);
+  }
+
+  30% {
+    transform: translateY(0%);
+  }
+
+  45% {
+    transform: translateY(0%);
+  }
+
+  100% {
+    transform: translateY(100%);
+  }
+}
+
+.rt-flash {
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  z-index: 20;
+  opacity: 0;
+  animation: flash-bang 1.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes flash-bang {
+
+  0%,
+  35% {
+    opacity: 0;
+  }
+
+  36% {
+    opacity: 1;
+  }
+
+  /* PUM, foto tomada */
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/* ───────────────────────────────────────────
+   🎶 PLAYLIST: Nota Gigante Sonando
+   ─────────────────────────────────────────── */
+
+.rt-music-stage {
+  position: absolute;
+  inset: 0;
+  background: rgba(25, 10, 20, 0.4);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-stage 1.6s ease-in-out forwards;
+}
+
+.rt-note {
+  font-size: 150px;
+  position: relative;
+  z-index: 5;
+  filter: drop-shadow(0 0 30px rgba(255, 100, 150, 0.8));
+  animation: note-bounce 1.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.rt-soundwave {
+  position: absolute;
+  width: 250px;
+  height: 250px;
+  border-radius: 50%;
+  border: 8px solid rgba(255, 150, 200, 0.8);
+  opacity: 0;
+}
+
+.rt-soundwave.x1 {
+  animation: wave-pulse 1.3s ease-out 0.2s forwards;
+}
+
+.rt-soundwave.x2 {
+  animation: wave-pulse 1.3s ease-out 0.4s forwards;
+}
+
+@keyframes note-bounce {
+  0% {
+    transform: scale(0.2) translateY(100px) rotate(-20deg);
+    opacity: 0;
+  }
+
+  25% {
+    transform: scale(1.4) translateY(0) rotate(15deg);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1) translateY(0) rotate(0deg);
+    opacity: 1;
+  }
+
+  75% {
+    transform: scale(1.1) translateY(0) rotate(5deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(3) translateY(-100px);
+    opacity: 0;
+  }
+}
+
+@keyframes wave-pulse {
+  0% {
+    transform: scale(0.5);
+    opacity: 1;
+    border-color: rgba(255, 150, 200, 1);
+  }
+
+  100% {
+    transform: scale(3);
+    opacity: 0;
+    border-color: rgba(255, 150, 200, 0);
+  }
+}
+
+@keyframes fade-stage {
+  0% {
+    opacity: 0;
+  }
+
+  20%,
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+  }
+}
+
+
+/* ───────────────────────────────────────────
+   ⭐ DESEOS: Estrella Ascendente
+   ─────────────────────────────────────────── */
+
+.rt-star-stage {
+  position: absolute;
+  inset: 0;
+  background: rgba(10, 5, 20, 0.6);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: fade-stage 1.6s ease-in-out forwards;
+}
+
+.rt-star {
+  position: absolute;
+  font-size: 150px;
+  z-index: 10;
+  filter: drop-shadow(0 0 50px rgba(255, 255, 150, 1));
+  /* Start bottom-left, end top-right */
+  left: -200px;
+  bottom: -200px;
+  animation: shooting-star 1.6s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+
+.rt-trail {
+  position: absolute;
+  left: -200px;
+  bottom: -200px;
+  width: 600px;
+  height: 20px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 200, 0.8), #fff);
+  border-radius: 10px;
+  transform-origin: right center;
+  filter: blur(8px);
+  animation: shooting-trail 1.6s cubic-bezier(0.5, 0, 0.2, 1) forwards;
+}
+
+@keyframes shooting-star {
+  0% {
+    transform: translate(0, 0) rotate(0deg);
+    opacity: 0;
+  }
+
+  20% {
+    opacity: 1;
+  }
+
+  80% {
+    opacity: 1;
+  }
+
+  100% {
+    transform: translate(120vw, -120vh) rotate(360deg);
+    opacity: 0;
+  }
+}
+
+@keyframes shooting-trail {
+  0% {
+    transform: translate(0, 0) rotate(-45deg);
+    opacity: 0;
+    width: 0;
+  }
+
+  20% {
+    opacity: 1;
+    width: 400px;
+  }
+
+  100% {
+    transform: translate(120vw, -120vh) rotate(-45deg);
+    opacity: 0;
+    width: 800px;
+  }
+}
+
+
+/* ───────────────────────────────────────────
+   🎬 BLOOPERS: Corte y Acción
+   ─────────────────────────────────────────── */
+
+.rt-bloopers-stage {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fade-stage 1.6s ease-in-out forwards;
+}
+
+.rt-clapperboard {
+  font-size: 180px;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.6));
+  animation: action-cut 1.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes action-cut {
+  0% {
+    transform: scale(0) rotate(-30deg);
+    opacity: 0;
+  }
+
+  40% {
+    transform: scale(1.2) rotate(10deg);
+    opacity: 1;
+  }
+
+  50% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+  }
+
+  /* Snap motion simulated by sudden shake */
+  55% {
+    transform: scale(1.05) rotate(-5deg);
+    opacity: 1;
+    filter: brightness(1.5);
+  }
+
+  60% {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+    filter: brightness(1);
+  }
+
+  85% {
+    transform: scale(1.1) rotate(0deg);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(4) rotate(20deg);
+    opacity: 0;
+  }
+}

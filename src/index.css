@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Outfit:wght@100..900&display=swap');
+@import "tailwindcss";
+
+/* ═══════════════════════════════════════════
+   Global Styles — Feminine Birthday Theme (HARD RESET)
+   ═══════════════════════════════════════════ */
+
+* {
+  font-family: 'Outfit', sans-serif !important;
+}
+
+h1, h2, h3, h4, .highlight, .ai-title, .sidebar__brand-text, .rt-hb-title, .hb-highlight {
+  font-family: 'Playfair Display', serif !important;
+}
+
+.welcome-badge {
+  font-family: 'Outfit', sans-serif !important;
+  text-transform: uppercase !important;
+  letter-spacing: 1px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Color palette — soft feminine tones */
+  --rose-50: #fff1f5;
+  --rose-100: #ffe4ed;
+  --rose-200: #fccfe0;
+  --rose-300: #f9a8c9;
+  --rose-400: #f472a8;
+  --rose-500: #e8467a;
+  --rose-600: #d6295f;
+
+  --lavender-50: #f5f0ff;
+  --lavender-100: #ede5ff;
+  --lavender-200: #ddd0ff;
+  --lavender-300: #c5abfa;
+  --lavender-400: #a78bdb;
+  --lavender-500: #8b6cc2;
+
+  --blush-50: #fef7f9;
+  --blush-100: #fdeef3;
+
+  --text-primary: #4a2040;
+  --text-secondary: #8c6585;
+  --text-muted: #b888a8;
+
+  --bg-main: #fdf6f9;
+  --bg-card: rgba(255, 255, 255, 0.6);
+
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'Outfit', sans-serif;
+
+  --sidebar-width: 240px;
+  --sidebar-collapsed: 72px;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text-secondary);
+  
+  /* Gradiente suave rosita a blanco para TODA la aplicación */
+  background: linear-gradient(135deg, #fff0f5 0%, #ffd1e3 50%, #ffb6cc 100%);
+  background-attachment: fixed;
+  
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  /* Las decoraciones sutiles por encima del gradiente */
+  background-image:
+    radial-gradient(ellipse at 20% 50%, rgba(252, 207, 224, 0.3) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, rgba(197, 171, 250, 0.2) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 80%, rgba(255, 228, 237, 0.25) 0%, transparent 50%),
+    linear-gradient(135deg, #fff0f5 0%, #ffd1e3 50%, #ffb6cc 100%);
+}
+
+#root {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  max-width: 100%;
+  border: none;
+  text-align: left;
+  margin: 0;
+}
+
+/* ─── Main content area ─── */
+
+.main-content {
+  flex: 1;
+  margin-left: var(--sidebar-width);
+  padding: 40px 48px;
+  min-height: 100vh;
+  transition: margin-left 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.main-content--shifted {
+  margin-left: var(--sidebar-collapsed);
+}
+
+/* ─── Typography ─── */
+
+h1, h2, h3, h4 {
+  font-family: var(--font-heading);
+  color: var(--text-primary);
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 48px;
+  font-weight: 600;
+  letter-spacing: -1px;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 32px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  margin-bottom: 12px;
+}
+
+h3 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+p {
+  margin: 0;
+  color: var(--text-secondary);
+}
+
+a {
+  color: var(--rose-500);
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+a:hover {
+  color: var(--rose-600);
+}
+
+/* ─── Scrollbar ─── */
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(200, 140, 180, 0.35);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(200, 140, 180, 0.55);
+}
+
+/* ─── Selection ─── */
+
+::selection {
+  background: rgba(232, 121, 168, 0.25);
+  color: var(--text-primary);
+}
+
+/* ─── Mobile ─── */
+
+@media (max-width: 768px) {
+  .main-content {
+    margin-left: var(--sidebar-collapsed);
+    padding: 24px 20px;
+  }
+
+  h1 {
+    font-size: 32px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+}
