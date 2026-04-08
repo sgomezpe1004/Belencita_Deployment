@@ -37,7 +37,7 @@ const GALLERY_PHOTOS = [
     { id: 5, src: '/belen3.jpeg', rotate: '0deg', tape: true },
     { id: 6, src: '/WhatsApp Image 2026-04-01 at 3.55.26 PM (5).jpeg', rotate: '-2deg' },
     { id: 7, src: '/belen5.jpeg', rotate: '1deg', sticker: '✨' },
-    { id: 8, src: '/WhatsApp Image 2026-04-01 at 3.55.27 PM (2).jpeg', rotate: '0deg' },
+    { id: 8, src: '/newimagebestie.jpeg', rotate: '0deg' },
     { id: 9, src: '/belen6.jpeg', rotate: '4deg', tape: true },
     { id: 10, src: '/WhatsApp Image 2026-04-01 at 3.55.27 PM (11).jpeg', rotate: '-3deg' },
     { id: 11, src: '/belen7.jpeg', rotate: '1deg' },
